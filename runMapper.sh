@@ -69,6 +69,6 @@ fi
 
 
 echo "Getting files ready for visualization !"
-$samtools view -Sb $fileName.out.sam | $samtools sort -m 4G -@$thread -o $fileName.sorted.bam - && $samtools index -@$thread $fileName.sorted.bam
+$samtools view -Sb $fileName.out.sam | $samtools sort -m 4G -@ $thread -o $fileName.sorted.bam - && $samtools index -@ $thread $fileName.sorted.bam
 
 echo "All Done :)"
