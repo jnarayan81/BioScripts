@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-#Bash script to run oligoMiner tools by Jitendra
+#Bash script to run oligoMiner.sh script by Jitendra
+#More at https://github.com/brianbeliveau/OligoMiner
 #These tools should in path
 #bowtie2-build
 #jellyfish
