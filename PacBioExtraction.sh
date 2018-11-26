@@ -1,4 +1,4 @@
-usr/bin/bash 
+#!/usr/bin/env bash
 #PacBio reads extraction scritps by Jitendra
 #You need to install bax2bam #conda install -c bioconda bax2bam
 # install bamtools package conda install -c bioconda bamtools 
