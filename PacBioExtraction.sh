@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 #PacBio reads extraction scritps by Jitendra
+#conda create -n smrttools bax2bam
+#source activate smrttools
 #You need to install bax2bam #conda install -c bioconda bax2bam
 # install bamtools package conda install -c bioconda bamtools 
 
