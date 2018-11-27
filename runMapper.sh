@@ -18,6 +18,7 @@ refFasta=$2
 longReads=$3
 thread=$4
 readsType=$5
+accuracy=$6
 
 if [ $# -lt 5 ]; then
     echo "No or less arguments provided"
