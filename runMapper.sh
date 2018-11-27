@@ -32,17 +32,19 @@ echo "Name of the file used for mapping $fileName, present at $refFasta"
 if [ $toolName == "bwa" ]; then
    echo "Mapping with $toolName"
    $bwaMemLoc index $refFasta
-   if [ $readsType == "ont" ]; then
-   	if [ $accuracy == "default" ]; then
-   	$bwaMemLoc mem -x ont2d $refFasta $longReads -t $thread > $fileName.out.sam
-	else [ $accuracy == "strict" ]; then
-	$bwaMemLoc mem -k 16 -W 60 $refFasta $longReads -t $thread > $fileName.out.sam
-	fi
-    elif [ $readsType == "pacbio" ]; then
-   	if [ $accuracy == "default" ]; then
-   	$bwaMemLoc mem -x pacbio $refFasta $longReads -t $thread > $fileName.out.sam
-	else [ $accuracy == "strict" ]; then
-	$bwaMemLoc mem -k 16 -W 60 $refFasta $longReads -t $thread > $fileName.out.sam
+   	if [ $readsType == "ont" ]; then
+   		if [ $accuracy == "default" ]; then
+   		$bwaMemLoc mem -x ont2d $refFasta $longReads -t $thread > $fileName.out.sam
+		else [ $accuracy == "strict" ]; then
+		$bwaMemLoc mem -k 16 -W 60 $refFasta $longReads -t $thread > $fileName.out.sam
+		fi
+    	elif [ $readsType == "pacbio" ]; then
+   		if [ $accuracy == "default" ]; then
+   		$bwaMemLoc mem -x pacbio $refFasta $longReads -t $thread > $fileName.out.sam
+		else [ $accuracy == "strict" ]; then
+		$bwaMemLoc mem -k 16 -W 60 $refFasta $longReads -t $thread > $fileName.out.sam
+	else
+		echo "BWA mem:Please specify reads type: ont, pacbio"
 	fi
 elif [ $toolName == "lamsa" ]; then
    echo "Mapping with $toolName"
