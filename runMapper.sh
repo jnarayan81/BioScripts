@@ -11,6 +11,7 @@ minimap2Loc=/home/urbe/Tools/minimap2-2.3_x64-linux/minimap2
 bwaMemLoc=/home/urbe/anaconda3/bin/bwa
 ngmlrLoc=/home/urbe/Tools/ngmlr/bin/ngmlr-0.2.3/ngmlr
 lamsaLoc=/home/urbe/Tools/LAMSA/lamsa
+lordfast=/home/urbe/Tools/lordfast
 
 #Parameters accepted
 toolName=$1
@@ -81,6 +82,10 @@ elif [ $toolName == "ngmlr" ]; then
 elif [ $toolName == "graphmap" ]; then
    echo "Mapping with $toolName"
    $graphMapLoc align -r $refFasta -d $longReads -t $thread -o $fileName.out.sam
+elif [ $toolName == "lordfast" ]; then
+   echo "Mapping with $toolName"
+   $lordfast --index $refFasta
+   $lordfast --search $refFasta --seq $longReads --threads $thread > $fileName.out.sam
 else
    echo "Unknown mapper name and parameter !"
 fi
