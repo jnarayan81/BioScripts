@@ -32,7 +32,11 @@ echo "Name of the file used for mapping $fileName, present at $refFasta"
 if [ $toolName == "bwa" ]; then
    echo "Mapping with $toolName"
    $bwaMemLoc index $refFasta
-   $bwaMemLoc mem $refFasta $longReads -t $thread > $fileName.out.sam
+   	if [ $accuracy == "default" ]; then
+   	$bwaMemLoc mem $refFasta $longReads -t $thread > $fileName.out.sam
+	else [ $accuracy == "strict" ]; then
+	$bwaMemLoc mem -k 16 -W 60 $refFasta $longReads -t $thread > $fileName.out.sam
+	fi
 elif [ $toolName == "lamsa" ]; then
    echo "Mapping with $toolName"
    $lamsaLoc index $refFasta
