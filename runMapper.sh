@@ -45,7 +45,11 @@ elif [ $toolName == "lamsa" ]; then
 elif [ $toolName == "minimap2" ]; then
    echo "Mapping with $toolName"
 	if [ $readsType == "ont" ]; then
+		if [ $accuracy == "default" ]; then
    		$minimap2Loc -ax map-ont $refFasta $longReads -t $thread > $fileName.out.sam
+		else [ $accuracy == "strict" ]; then
+		$minimap2Loc -ax map-ont -k 14 -W 45 $refFasta $longReads -t $thread > $fileName.out.sam
+		fi
 	elif [ $readsType == "pacbio" ]; then
    		$minimap2Loc -ax map-pb $refFasta $longReads -t $thread > $fileName.out.sam
 	else
