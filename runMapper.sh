@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #only for LONG READS mapping 
-#USAGE: runMapper.sh minimap2 ref.fa reads.fa/fq 48 ont
+#USAGE: runMapper.sh minimap2 ref.fa reads.fa/fq 48 ont default/strict
 echo -e "This is a bash scrip to map your long reads and make it visualization ready !" 
 
 #Location of the tools
