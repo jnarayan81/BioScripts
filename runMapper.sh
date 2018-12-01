@@ -11,7 +11,8 @@ minimap2Loc=/home/urbe/Tools/minimap2-2.3_x64-linux/minimap2
 bwaMemLoc=/home/urbe/anaconda3/bin/bwa
 ngmlrLoc=/home/urbe/Tools/ngmlr/bin/ngmlr-0.2.3/ngmlr
 lamsaLoc=/home/urbe/Tools/LAMSA/lamsa
-lordfast=/home/urbe/Tools/lordfast
+lordfastLoc=/home/urbe/Tools/lordfast
+cosineLoc=/home/urbe/Tools/cosine
 
 #Parameters accepted
 toolName=$1
@@ -79,18 +80,27 @@ elif [ $toolName == "ngmlr" ]; then
 	else
 		echo "NGMLR:Please specify reads type: ont, pacbio"
 	fi
+elif [ $toolName == "cosine" ]; then
+   echo "Mapping with $toolName"
+   $cosineLoc --ref_filename $refFasta --output_ref_prefix $fileName.out --fft_block_size 32768 --kmer_size 3 --max_read_size 5000 --window_size 500 --window_shift 100 --seed 0 --save_ref_fft 1
+	if [ $readsType == "ont" ]; then
+   		$cosineLoc --ref_filename $refFasta --read_filename $longReads --output_ref_prefix $fileName.out.sam --output_read_prefix $fileName.out.sam --fft_block_size 32768  --max_num_fft_blocks 15 --num_threads $thread --kmer_size 3 --max_read_size 5000 --window_size 100 --window_shift 10 --min_dp_score 100 --seed 1
+	elif [ $readsType == "pacbio" ]; then
+   		$cosineLoc --ref_filename $refFasta --read_filename $longReads --output_ref_prefix $fileName.out.sam --output_read_prefix $fileName.out.sam --fft_block_size 32768  --max_num_fft_blocks 15 --num_threads $thread --kmer_size 3 --max_read_size 5000 --window_size 250 --window_shift 50 --min_dp_score 100 --seed 1
+	else
+		echo "COSINE:Please specify reads type: ont, pacbio"
+	fi
 elif [ $toolName == "graphmap" ]; then
    echo "Mapping with $toolName"
    $graphMapLoc align -r $refFasta -d $longReads -t $thread -o $fileName.out.sam
 elif [ $toolName == "lordfast" ]; then
    echo "Mapping with $toolName"
-   $lordfast --index $refFasta
-   $lordfast --search $refFasta --seq $longReads --threads $thread > $fileName.out.sam
+   $lordfastLoc --index $refFasta
+   $lordfastLoc --search $refFasta --seq $longReads --threads $thread > $fileName.out.sam
 else
    echo "Unknown mapper name and parameter !"
 fi
-
-
+	       
 echo "Getting files ready for visualization !"
 $samtools view -Sb $fileName.out.sam | $samtools sort -m 4G -@ $thread -o $fileName.sorted.bam - && $samtools index -@ $thread $fileName.sorted.bam
 
