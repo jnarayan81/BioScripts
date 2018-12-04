@@ -11,7 +11,7 @@ minimap2Loc=/home/urbe/Tools/minimap2-2.3_x64-linux/minimap2
 bwaMemLoc=/home/urbe/anaconda3/bin/bwa
 ngmlrLoc=/home/urbe/Tools/ngmlr/bin/ngmlr-0.2.3/ngmlr
 lamsaLoc=/home/urbe/Tools/LAMSA/lamsa
-lordfastLoc=/home/urbe/Tools/lordfast
+lordfastLoc=/home/urbe/Tools/lordfast/lordfast
 cosineLoc=/home/urbe/Tools/cosine
 
 #Parameters accepted
@@ -24,7 +24,7 @@ accuracy=$6
 
 if [ $# -lt 5 ]; then
     echo "No or less arguments provided"
-    echo "#USAGE: runMapper.sh minimap2 ref.fa reads.fa/fq 48 ont"
+    echo "#USAGE: runMapper.sh minimap2 ref.fa reads.fa/fq 48 ont default/strict"
     exit 1
 fi
 
@@ -37,14 +37,15 @@ if [ $toolName == "bwa" ]; then
    	if [ $readsType == "ont" ]; then
    		if [ $accuracy == "default" ]; then
    		$bwaMemLoc mem -x ont2d $refFasta $longReads -t $thread > $fileName.out.sam
-		else [ $accuracy == "strict" ]; then
+		elif [ $accuracy == "strict" ]; then
 		$bwaMemLoc mem -k 16 -W 60 $refFasta $longReads -t $thread > $fileName.out.sam
 		fi
     	elif [ $readsType == "pacbio" ]; then
    		if [ $accuracy == "default" ]; then
    		$bwaMemLoc mem -x pacbio $refFasta $longReads -t $thread > $fileName.out.sam
-		else [ $accuracy == "strict" ]; then
+		elif [ $accuracy == "strict" ]; then
 		$bwaMemLoc mem -k 16 -W 60 $refFasta $longReads -t $thread > $fileName.out.sam
+		fi
 	else
 		echo "BWA mem:Please specify reads type: ont, pacbio"
 	fi
@@ -63,7 +64,7 @@ elif [ $toolName == "minimap2" ]; then
 	if [ $readsType == "ont" ]; then
 		if [ $accuracy == "default" ]; then
    		$minimap2Loc -ax map-ont $refFasta $longReads -t $thread > $fileName.out.sam
-		else [ $accuracy == "strict" ]; then
+		elif [ $accuracy == "strict" ]; then
 		$minimap2Loc -ax map-ont -k 14 -W 45 $refFasta $longReads -t $thread > $fileName.out.sam
 		fi
 	elif [ $readsType == "pacbio" ]; then
@@ -93,10 +94,12 @@ elif [ $toolName == "cosine" ]; then
 elif [ $toolName == "graphmap" ]; then
    echo "Mapping with $toolName"
    $graphMapLoc align -r $refFasta -d $longReads -t $thread -o $fileName.out.sam
+
 elif [ $toolName == "lordfast" ]; then
    echo "Mapping with $toolName"
    $lordfastLoc --index $refFasta
    $lordfastLoc --search $refFasta --seq $longReads --threads $thread > $fileName.out.sam
+
 else
    echo "Unknown mapper name and parameter !"
 fi
