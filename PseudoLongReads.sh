@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #Bash script to create a pseduo long reads
+#USE: PseudoLongReads.sh Bwise.fa
 i=0
 while (( i++ < 25 )); do
   cp $1 "PseudoLR$i.fa"
