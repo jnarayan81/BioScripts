@@ -1,5 +1,6 @@
 #!/bin/bash
 input="$1"
+#The multifasta file
 b='N'
 #Here the $b contain the string you want to insert
 
