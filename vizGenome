@@ -1,5 +1,5 @@
 #Align to genome
-nucmer --maxmatch -p prefix -t 48 genome1.fa final.genome.scf.fasta -p out
+nucmer --maxmatch -p prefix -t 48 -p out genome1.fa final.genome.scf.fasta
 
 #Convert into DOT format/ Download this script
 #just download the DotPrep.py script and run it on the output from MUMmer's nucmer aligner, which will give you the same results as the Applet on DNAnexus.
@@ -9,5 +9,5 @@ https://dnanexus.github.io/dot/DotPrep.py
 #Convert into the format
 DotPrep.py --delta out.delta
 
-Upload the index and coords file at 
+#Upload the index and coords file at 
 https://dnanexus.github.io/dot/
