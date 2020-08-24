@@ -2,6 +2,8 @@
 #run sibelia with Multi CPUs
 #author: jnarayan81@gmail.com
 
+#USAGE:  perl ParallelSibelia.txt -s /home/urbe/Tools/Sibelia-3.0.7-Linux/bin/Sibelia -q query1.fa -t target1.fa -o sibeliaOut -w resultDir -p 2 -c xs:loose
+
 use File::Spec::Functions qw/rel2abs/;
 use File::Basename;
 use Getopt::Long;
